@@ -6,7 +6,6 @@
         <activity
             android:name=".TedPermissionActivity"
             android:theme="@style/Theme.Transparent"
-
             />
 
 

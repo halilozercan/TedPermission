@@ -1,8 +1,11 @@
 package com.gun0912.tedpermission;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 
 import com.gun0912.tedpermission.util.Dlog;
 import com.gun0912.tedpermission.util.ObjectUtils;
@@ -134,8 +137,6 @@ public class TedPermission {
 
 
     public void check() {
-
-
         if (instance.listener == null) {
             throw new NullPointerException("You must setPermissionListener() on TedPermission");
         } else if (ObjectUtils.isEmpty(instance.permissions)) {
@@ -155,9 +156,29 @@ public class TedPermission {
             Dlog.d("Marshmallow");
             instance.checkPermissions();
         }
-
-
     }
 
+    public boolean checkNow() {
+        if (ObjectUtils.isEmpty(instance.permissions)) {
+            throw new NullPointerException("You must setPermissions() on TedPermission");
+        }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            Dlog.d("preMarshmallow");
+            return true;
+        } else {
+            Dlog.d("Marshmallow");
+            boolean result = true;
+            for(String permission:instance.permissions) {
+                int permissionCheck = ContextCompat.checkSelfPermission(
+                    instance.context, permission);
+                if(permissionCheck != PackageManager.PERMISSION_GRANTED){
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        }
+    }
 
 }

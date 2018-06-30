@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TedPermission</string>
+
+
+    <string name="tedpermission_setting" translatable="false">Setting</string>
+    <string name="tedpermission_close" translatable="false">Close</string>
+    <string name="tedpermission_confirm" translatable="false">Confirm</string>
+
+</resources>
